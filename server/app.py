@@ -1,6 +1,7 @@
 from chalice import Chalice
 import io
 import tempfile
+import hashlib
 
 
 def _get_request_bytes():
@@ -23,21 +24,29 @@ app = Chalice(app_name='contract-sv')
 def index():
     return {'hello': 'world'}
 
+
 @app.route('/document/history/{document_id}', cors=True)
 def get_doc_history(document_id):
     # TODO: get the hash history for the provided document.
     return {'hello': 'world'}
 
 
-# https://github.com/aws/chalice/issues/796
-@app.route('/document/hash/{document_id}', cors=True, methods=['POST'], content_types=['multipart/form-data'])
+# https://github.com/aws/chalice/issues/79
+@app.route('/document/hash/{document_id}', cors=True, methods=['POST'], content_types=['application/octet-stream'])
 def hash_doc(document_id):
     file_data = _get_request_bytes()
-    body = file_data.getbuffer()
-    with tempfile.NamedTemporaryFile() as temp:
-        temp.write(body)
-        temp.flush()
-        # TODO: read temp file and store hash to bitcoin sv blockchain.
+    data = file_data.getvalue()
+    m = hashlib.md5()
+    m.update(data)
+    file_hash = m.hexdigest()
+    return {
+        'hash': file_hash
+    }
+
+    # with tempfile.NamedTemporaryFile() as temp:
+    #     temp.write(body)
+    #     temp.flush()
+    # TODO: read temp file and store hash to bitcoin sv blockchain.
 
 
 # The view function above will return {"hello": "world"}
