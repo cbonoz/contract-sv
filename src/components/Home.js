@@ -1,18 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
-import FileChain from "./FileChain";
-import createReactClass from "create-react-class";
-import { Jumbotron, Button, Grid, Row, Col } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import ReactRotatingText from "react-rotating-text";
 import { Link } from "react-router-dom";
 
 import contractsvLogo from "../assets/contract_sv_trans.png";
-
-import api from "../helpers/api";
-import PropTypes from "prop-types";
-
-const MAX_BLOCKS = 15;
-
+import { HOW_IT_WORKS } from "../util";
 const ROTATING_ITEMS = [
   "A private",
   "An auditable",
@@ -20,37 +13,68 @@ const ROTATING_ITEMS = [
   "A secure",
 ];
 
-const Home = createReactClass({
-  render() {
-    const self = this;
-    return (
-      <div className="home-page">
-        {/*TODO: uncomment*/}
-        <img
-          src={contractsvLogo}
-          className="centered header-logo header-logo-home"
-        />
+const Home = () => {
+  const [showHowModal, setShowHowModal] = useState(false);
 
-        <p className="header-text-h2">
-          <ReactRotatingText className="rotating-bold" items={ROTATING_ITEMS} />
-          {/* An auditable */}
-          <br />
-          contract management platform
-        </p>
-        <p className="header-text-h3">
-          <br />
-          {/* <b>No</b> Username or Password required. */}
-        </p>
-        <p>
-          <Link to="/upload">
-            <Button bsStyle="success btn-large" className="create-button">
-              Start Uploading
-            </Button>
-          </Link>
-        </p>
-      </div>
-    );
-  },
-});
+  const showModal = (e) => {
+    e.preventDefault();
+    setShowHowModal(true);
+  };
+
+  return (
+    <div className="home-page">
+      {/*TODO: uncomment*/}
+      <img
+        src={contractsvLogo}
+        className="centered header-logo header-logo-home"
+      />
+
+      <p className="header-text-h2">
+        <ReactRotatingText className="rotating-bold" items={ROTATING_ITEMS} />
+        {/* An auditable */}
+        <br />
+        document verification platform backed by BitcoinSV
+      </p>
+      <p className="header-text-h3">
+        <br />
+        {/* <b>No</b> Username or Password required. */}
+      </p>
+      <p className="how-it-works">
+        <a href="#" onClick={showModal}>
+          Welcome to ContractSV
+        </a>
+      </p>
+      <p>
+        <Link to="/upload">
+          <Button bsStyle="success btn-large" className="create-button">
+            Start Uploading
+          </Button>
+        </Link>
+      </p>
+
+      <Modal show={showHowModal} onHide={() => setShowHowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>How it works</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ol>
+            {HOW_IT_WORKS.map((step, i) => {
+              return (
+                <li className="how-it-works-item" key={i}>
+                  {step}
+                </li>
+              );
+            })}
+          </ol>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button bsStyle="danger" onClick={() => setShowHowModal(false)}>
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
 
 export default Home;
