@@ -43,10 +43,10 @@ class DocumentRepository:
         txs = p_key.get_transactions()
         return list(filter(lambda m: m['name'] == doc_name, self._extract_metadata(txs)))
 
-    def save(self, wallet_key, doc_name, doc_hash):
+    def save(self, wallet_key, doc_hash, doc_name):
         p_key = Key(wallet_key, network=self.network)
         try:
-            p_key.send_op_return(list_of_pushdata=[(doc_name + ':' + doc_hash, 'utf-8')])
+            p_key.send_op_return(list_of_pushdata=[(doc_hash + ':' + doc_name, 'utf-8')])
             return True
         except ValueError as err:
             if str(err) == 'Transactions must have at least one unspent.':
