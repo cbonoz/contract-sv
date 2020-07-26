@@ -44,11 +44,12 @@ def get_doc_history(document_name):
 def hash_doc(document_name):
     wallet_key = app.current_request.headers['wallet_key']
     file_data = _get_request_bytes()
+    file_size = len(app.current_request.raw_body)
     data = file_data.getvalue()
     m = hashlib.md5()
     m.update(data)
     file_hash = m.hexdigest()
-    repo.save(wallet_key, file_hash, document_name)
+    repo.save(wallet_key, file_hash, document_name, file_size)
     return {
         'hash': file_hash
     }
