@@ -1,7 +1,8 @@
 from chalice import Chalice
 import io
-import tempfile
 import hashlib
+
+from document_repository import DocumentRepository
 
 
 def _get_request_bytes():
@@ -18,6 +19,7 @@ def check_keys_in_object(keys, obj):
 
 
 app = Chalice(app_name='contract-sv')
+repo = DocumentRepository()
 
 
 @app.route('/', cors=True)
@@ -25,28 +27,31 @@ def index():
     return {'hello': 'world'}
 
 
-@app.route('/document/history/{document_id}', cors=True)
-def get_doc_history(document_id):
-    # TODO: get the hash history for the provided document.
-    return {'hello': 'world'}
+@app.route('/documents', cors=True)
+def get_docs():
+    wallet_key = app.current_request.headers['wallet_key']
+    return repo.fetch_documents(wallet_key)
+
+
+@app.route('/document/history/{document_name}', cors=True)
+def get_doc_history(document_name):
+    wallet_key = app.current_request.headers['wallet_key']
+    return repo.fetch_history(wallet_key, document_name)
 
 
 # https://github.com/aws/chalice/issues/79
-@app.route('/document/hash/{document_id}', cors=True, methods=['POST'], content_types=['application/octet-stream'])
-def hash_doc(document_id):
+@app.route('/document/hash/{document_name}', cors=True, methods=['POST'], content_types=['application/octet-stream'])
+def hash_doc(document_name):
+    wallet_key = app.current_request.headers['wallet_key']
     file_data = _get_request_bytes()
     data = file_data.getvalue()
     m = hashlib.md5()
     m.update(data)
     file_hash = m.hexdigest()
+    repo.save(wallet_key, file_hash, document_name)
     return {
         'hash': file_hash
     }
-
-    # with tempfile.NamedTemporaryFile() as temp:
-    #     temp.write(body)
-    #     temp.flush()
-    # TODO: read temp file and store hash to bitcoin sv blockchain.
 
 
 # The view function above will return {"hello": "world"}
