@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import { Navbar, NavItem, NavDropdown, Nav, MenuItem } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "./auth";
+import { setAxiosHeader } from "./helpers/api";
+import axios from "axios";
 
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
@@ -37,6 +39,10 @@ const App = () => {
   };
 
   const hasAuth = authTokens && authTokens.wif;
+
+  if (hasAuth && !axios.defaults.headers.common["wallet_key"]) {
+    setAxiosHeader("wallet_key", authTokens.wif);
+  }
 
   return (
     <AuthContext.Provider

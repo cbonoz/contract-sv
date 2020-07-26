@@ -13,6 +13,7 @@ const MAX_BLOCKS = 15;
 const Upload = () => {
   const [blockFiles, setBlockFiles] = useState([]);
   const [files, setFiles] = useState([]);
+  const [balance, setBalance] = useState({});
   const { hasAuth } = useAuth();
 
   const goToDashboard = () => (window.location.href = "/");
@@ -20,6 +21,21 @@ const Upload = () => {
   if (!hasAuth) {
     goToDashboard();
   }
+
+  useEffect(() => {
+    const getBal = async () => {
+      try {
+        const res = await api.getBalance();
+        const { data } = res;
+        console.log("balance", data);
+        setBalance(data);
+      } catch (e) {
+        console.error("error getting balance", e);
+      }
+    };
+
+    getBal();
+  }, []);
 
   useEffect(() => {
     const block = api.createTestMetaData();

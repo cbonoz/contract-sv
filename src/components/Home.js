@@ -23,7 +23,6 @@ const Home = () => {
 
   const login = () => {
     setAuthTokens({ wif });
-    setAxiosHeader("wallet_key", wif);
     window.location.href = "/upload";
   };
 

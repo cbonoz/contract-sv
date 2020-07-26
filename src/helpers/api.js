@@ -8,14 +8,8 @@ const library = (function () {
   const sha256 = require("js-sha256").sha256;
   const TEST_DEMO_ADDRESS = "AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y";
 
-  const getHeaders = () => {
-    const token = localStorage.getItem("tok");
-    return {
-      headers: { Authorization: "Bearer " + token },
-    };
-  };
-
   const setAxiosHeader = (key, value) => {
+    console.log("setting header", key, value);
     axios.defaults.headers.common[key] = value;
   };
 
@@ -105,7 +99,12 @@ const library = (function () {
 
   function getFilesForSharedKey(key) {
     const url = `${BASE_URL}/api/files/${key}`;
-    return axios.get(url, getHeaders()).then((response) => response.data);
+    return axios.get(url).then((response) => response.data);
+  }
+
+  function getBalance() {
+    const url = `${BASE_URL}/wallet/balance`;
+    return axios.get(url);
   }
 
   function putView(name, address) {
@@ -146,6 +145,7 @@ const library = (function () {
     setAxiosHeader,
     postUploadFile,
     postGrantAccess,
+    getBalance,
     getFilesForSharedKey,
   };
 })();
