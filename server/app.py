@@ -39,6 +39,12 @@ def get_doc_history(document_name):
     return repo.fetch_history(wallet_key, document_name)
 
 
+@app.route('/wallet/balance', cors=True)
+def get_wallet_balance():
+    wallet_key = app.current_request.headers['wallet_key']
+    return Key(wallet_key).get_balance()
+    
+
 # https://github.com/aws/chalice/issues/79
 @app.route('/document/hash/{document_name}', cors=True, methods=['POST'], content_types=['application/octet-stream'])
 def hash_doc(document_name):
