@@ -13,10 +13,9 @@ const MAX_BLOCKS = 15;
 const Upload = () => {
   const [blockFiles, setBlockFiles] = useState([]);
   const [files, setFiles] = useState([]);
-  const { authTokens } = useAuth();
+  const { hasAuth } = useAuth();
 
   const goToDashboard = () => (window.location.href = "/");
-  const hasAuth = authTokens && authTokens.wif;
 
   if (!hasAuth) {
     goToDashboard();

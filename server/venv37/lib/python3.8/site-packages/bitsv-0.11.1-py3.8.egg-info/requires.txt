@@ -1,0 +1,13 @@
+coincurve>=4.3.0
+requests
+python-bitcoinrpc
+whatsonchain
+
+[cache]
+lmdb
+
+[cli]
+appdirs
+click
+privy
+tinydb

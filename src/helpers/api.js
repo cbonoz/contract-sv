@@ -15,6 +15,10 @@ const library = (function () {
     };
   };
 
+  const setAxiosHeader = (key, value) => {
+    axios.defaults.headers.common[key] = value;
+  };
+
   const generateFileName = () => {
     const name = faker.address.city();
     return `${name} Rental.pdf`;
@@ -139,6 +143,7 @@ const library = (function () {
     createMetaData,
     createTestMetaData,
     hashData,
+    setAxiosHeader,
     postUploadFile,
     postGrantAccess,
     getFilesForSharedKey,

@@ -32,8 +32,16 @@ const App = () => {
     setAuthTokens(data);
   };
 
+  const logout = () => {
+    localStorage.removeItem("tokens");
+  };
+
+  const hasAuth = authTokens && authTokens.wif;
+
   return (
-    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+    <AuthContext.Provider
+      value={{ authTokens, setAuthTokens: setTokens, hasAuth }}
+    >
       <div className="App">
         <ToastContainer position={toast.POSITION.TOP_CENTER} />
 
@@ -48,7 +56,17 @@ const App = () => {
             </Navbar.Brand>
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/upload">Upload</Nav.Link>
-            {/* <Nav.Link href="/files">Files</Nav.Link> */}
+            {hasAuth && (
+              <Navbar.Collapse>
+                <Nav.Link
+                  href="/"
+                  onClick={logout}
+                  className="justify-content-end"
+                >
+                  Logout
+                </Nav.Link>
+              </Navbar.Collapse>
+            )}
           </Nav>
         </Navbar>
 

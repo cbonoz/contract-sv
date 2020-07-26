@@ -1,0 +1,3 @@
+[console_scripts]
+bitsv = bitsv.cli:bitsv
+
