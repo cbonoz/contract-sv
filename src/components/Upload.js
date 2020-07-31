@@ -23,43 +23,24 @@ const Upload = () => {
   }
 
   useEffect(() => {
-    const getBal = async () => {
+    const getDocs = async () => {
       try {
-        const res = await api.getBalance();
+        const res = await api.getDocuments();
         const { data } = res;
-        console.log("balance", data);
-        setBalance(data);
+        console.log("docs", data);
+        setBlockFiles(data);
       } catch (e) {
-        console.error("error getting balance", e);
+        console.error("error loading documents", e);
       }
     };
 
-    getBal();
-  }, []);
-
-  useEffect(() => {
-    const block = api.createTestMetaData();
-    const block2 = api.createTestMetaData();
-    const block3 = api.createTestMetaData();
-    addBlocks([block, block2, block3]);
-    return () => {};
+    getDocs();
   }, []);
 
   function addBlocks(blocks) {
     setBlockFiles(blockFiles.concat(blocks));
   }
 
-  function generateNextBlock() {
-    const block = api.createTestMetaData();
-    let nextList = [block].concat(this.state.blockFiles);
-
-    if (nextList.length > MAX_BLOCKS) {
-      nextList = nextList.splice(0, MAX_BLOCKS);
-    }
-
-    console.log(nextList);
-    setBlockFiles(nextList);
-  }
   if (!hasAuth) {
     return null;
   }

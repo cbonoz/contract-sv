@@ -1,8 +1,9 @@
-from chalice import Chalice
+from chalice import Chalice, CORSConfig
 import io
 import hashlib
 from chalice import BadRequestError
 from document_repository import DocumentRepository
+from bitsv import Key
 
 
 def _get_request_bytes():
@@ -17,34 +18,39 @@ def check_keys_in_object(keys, obj):
             ','.join(missing_keys))
         raise Exception(err)
 
+
 def get_wallet_key_header():
     wallet_key = app.current_request.headers.get('wallet_key', None)
     if not wallet_key:
         raise BadRequestError('No wallet_key provided')
     return wallet_key
 
+
 app = Chalice(app_name='contract-sv')
+
+
 repo = DocumentRepository()
+cors_config = CORSConfig(allow_origin='http://localhost:3000', allow_headers=['wallet_key'])
 
 
-@app.route('/', cors=True)
+@app.route('/', cors=cors_config)
 def index():
     return {'hello': 'world'}
 
 
-@app.route('/documents', cors=True)
+@app.route('/documents', cors=cors_config)
 def get_docs():
     wallet_key = get_wallet_key_header()
     return repo.fetch_documents(wallet_key)
 
 
-@app.route('/document/history/{document_name}', cors=True)
+@app.route('/document/history/{document_name}', cors=cors_config)
 def get_doc_history(document_name):
     wallet_key = get_wallet_key_header()
     return repo.fetch_history(wallet_key, document_name)
 
 
-@app.route('/wallet/balance', cors=True)
+@app.route('/wallet/balance', cors=cors_config)
 def get_wallet_balance():
     wallet_key = get_wallet_key_header()
     print('key', wallet_key)
@@ -52,7 +58,7 @@ def get_wallet_balance():
 
 
 # https://github.com/aws/chalice/issues/79
-@app.route('/document/hash/{document_name}', cors=True, methods=['POST'], content_types=['application/octet-stream'])
+@app.route('/document/hash/{document_name}', cors=cors_config, methods=['POST'], content_types=['application/octet-stream'])
 def hash_doc(document_name):
     wallet_key = get_wallet_key_header()
     file_data = _get_request_bytes()

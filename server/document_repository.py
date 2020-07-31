@@ -42,8 +42,21 @@ class DocumentRepository:
         p_key = Key(wallet_key, network=self.network)
         txs = p_key.get_transactions()
         metadata_list = self._extract_metadata(txs)
-        # TODO: get last modified timestamp
-        return sorted(set(map(lambda m: m['name'], metadata_list)))
+        # TODO: this is inefficient but probably sufficient for the time being
+        docs_data = {}
+        for metadata in metadata_list:
+            name = metadata['name']
+            if not docs_data.get(name, None):
+                docs_data[name] = {'versions': 1, 'last_modified': metadata['timestamp']}
+            else:
+                version = docs_data[name]['versions'] + 1
+                last_modified = max(docs_data[name]['last_modified'], metadata['timestamp'])
+                docs_data[name] = {'versions': version, 'last_modified': last_modified}
+        results = []
+        # TODO: there must be a better way to do this, but I'm a python n00b
+        for entry in docs_data.items():
+            results.append({'name': entry[0], 'data': entry[1]})
+        return results
 
     def fetch_history(self, wallet_key, doc_name):
         p_key = Key(wallet_key, network=self.network)

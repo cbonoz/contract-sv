@@ -102,6 +102,11 @@ const library = (function () {
     return axios.get(url).then((response) => response.data);
   }
 
+  function getDocuments() {
+    const url = `${BASE_URL}/documents`;
+    return axios.get(url);
+  }
+
   function getBalance() {
     const url = `${BASE_URL}/wallet/balance`;
     return axios.get(url);
@@ -147,6 +152,7 @@ const library = (function () {
     postGrantAccess,
     getBalance,
     getFilesForSharedKey,
+    getDocuments
   };
 })();
 module.exports = library;

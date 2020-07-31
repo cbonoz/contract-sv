@@ -14,19 +14,9 @@ const FileDetails = createReactClass({
 
         return (
             <div>
-                {/* <h4><b>Contract Address:</b><br/>{file["address"]}</h4> */}
                 <h4><b>{file['name']}</b></h4>
-                {fileKeys.map((fileKey, j) => {
-                    let element = file[fileKey];
-                    if (!element) {
-                        return null
-                    }
-                    
-                    if (element instanceof Object) {
-                        element = JSON.stringify(element);
-                    } 
-                    return <span key={j} className="file-detail"><b>{fileKey}: </b>{element}<br/></span>
-                })}
+                <div className="file-detail"><b>Versions:</b> {file['data']['versions']}</div>
+                <div className="file-detail"><b>Last modified:</b> {new Date(file['data']['last_modified'] * 1000).toLocaleDateString()}</div>
             </div>
         );
     }
