@@ -1,24 +1,18 @@
 import React from "react";
 import createReactClass from "create-react-class";
-import { Button, Form, ListGroupItem, Modal, ListGroup } from "react-bootstrap";
+import {Button, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import FlipMove from "react-flip-move";
 import Columns from "react-columns";
-import PropTypes from "prop-types";
 import FileDetails from "./FileDetails";
-import { capLength } from "../util";
+import {capLength} from "../util";
 
-import { putEdit, putView } from "../helpers/api";
-
-const DEFAULT_TRANSACTION =
-  "0x2446f1fd773fbb9f080e674b60c6a033c7ed7427b8b9413cf28a2a4a6da9b56c";
+import {putEdit} from "../helpers/api";
 
 const FileChain = createReactClass({
   componentWillMount() {
     this.setState({
       showModal: false,
       currentMetadata: null,
-      currentKey: null,
-      currentTransaction: DEFAULT_TRANSACTION,
     });
   },
 
@@ -33,14 +27,9 @@ const FileChain = createReactClass({
     putEdit("chris", metadata.address).then(console.log);
   },
 
-  download(metadata) {
-    // TODO: implement
-    console.log("download", metadata);
-    putView("chris", metadata.address).then(console.log);
-  },
-
-  handleKeyChange(e) {
-    this.setState({ currentKey: e.target.value });
+  seeVersionHistory(metadata) {
+    console.log("version history", metadata);
+    window.open("/files/" + metadata.name)
   },
 
   handleClose() {
@@ -51,7 +40,6 @@ const FileChain = createReactClass({
     const self = this;
     const metadata = self.state.currentMetadata;
     const blockFiles = self.props.blockFiles;
-    const { currentTransaction } = this.state;
 
     return (
       <div className="file-chain">
@@ -67,7 +55,7 @@ const FileChain = createReactClass({
                     key={i}
                     enterAnimation="accordionHorizontal"
                     leaveAnimation="accordionHorizontal"
-                    duration={500}
+                    duration={200}
                     appearAnimation="accordionVertical"
                   >
                     <div
@@ -95,32 +83,26 @@ const FileChain = createReactClass({
                 {capLength(metadata.address, 50)}
               </p>
             )}
-            <h5>
-              <b>Original Contract Transaction Hash:</b>
-            </h5>
-            {currentTransaction && <p>{currentTransaction}</p>}
-            <hr />
-            <hr />
-            <Button className="delete-button" bsStyle="danger">
-              Delete File
-            </Button>
-            <p>
-              Note that deleting a file will remove the ability of others to
-              view or edit the file by making it "inactive". The contract record
-              and history will still be preserved on the blockchain.
-            </p>
+            {/*<hr />*/}
+            {/*<Button className="delete-button" bsStyle="danger">*/}
+            {/*  Delete File*/}
+            {/*</Button>*/}
+            {/*<p>*/}
+            {/*  Note that deleting a file will remove the ability of others to*/}
+            {/*  view or edit the file by making it "inactive". The contract record*/}
+            {/*  and history will still be preserved on the blockchain.*/}
+            {/*</p>*/}
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="success" onClick={() => this.edit(metadata)}>
               Upload new version
             </Button>
-            <Button bsStyle="info" onClick={() => this.download(metadata)}>
-              Download
+            <Button bsStyle="info" onClick={() => this.seeVersionHistory(metadata)}>
+              See version history
             </Button>
             <Button bsStyle="danger" onClick={this.handleClose}>
               Close
             </Button>
-            {/*<Button bsStyle="danger" onClick={this.handleClose}>Grant Access</Button>*/}
           </Modal.Footer>
         </Modal>
       </div>

@@ -2,9 +2,13 @@ import React from 'react'
 import History from "./History";
 import createReactClass from "create-react-class";
 import api from "../helpers/api";
+import Loader from "react-loader-spinner"
 
 const FileInfo = createReactClass({
+
     componentWillMount() {
+        const fileId = this.props.match.params.fileId
+
         this.setState({
             loading: true,
             versions: null,
@@ -12,7 +16,7 @@ const FileInfo = createReactClass({
 
         const getDocs = async () => {
             try {
-                const res = await api.getHistory("doc3");
+                const res = await api.getHistory(fileId);
                 const { data } = res;
                 this.setState({
                     loading: false,
@@ -28,8 +32,18 @@ const FileInfo = createReactClass({
     },
 
     render() {
+        let fileId = this.props.match.params.fileId
+        let component
+        if (this.state.loading) {
+            component = <Loader type="ThreeDots" color="#007bff" height="50" width="50" />
+        } else {
+            component = <History versions={this.state.versions}/>
+        }
         return (
-            <History versions={this.state.versions}/>
+            <div>
+                <h3>Version history for <b>{fileId}</b></h3>
+                {component}
+            </div>
         )
     }
 });
