@@ -61,7 +61,7 @@ class DocumentRepository:
     def fetch_history(self, wallet_key, doc_name):
         p_key = Key(wallet_key, network=self.network)
         txs = p_key.get_transactions()
-        return list(filter(lambda m: m['name'] == doc_name, self._extract_metadata(txs)))
+        return sorted(filter(lambda m: m['name'] == doc_name, self._extract_metadata(txs)), key=lambda m: m['timestamp'], reverse=True)
 
     def save(self, wallet_key, doc_hash, doc_name, doc_size):
         p_key = Key(wallet_key, network=self.network)
