@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 server/venv/
 server/venv37/
+server/venv37
 server/__pycache__
 venv
 

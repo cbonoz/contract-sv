@@ -96,11 +96,12 @@ const Home = () => {
             enter it below to begin:
           </p>
           <div class="field">
-            <label class="label">WIF:</label>
+            <label class="label">Enter wallet key:</label>
             <div class="control">
-              <input
-                class="input"
+              <textarea
+                className="textarea login-textarea"
                 type="text"
+                rows={5}
                 placeholder="Enter WIF"
                 onChange={(e) => setWif(e.target.value)}
                 value={wif}

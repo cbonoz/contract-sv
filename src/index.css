@@ -18,6 +18,18 @@ body {
   margin-top: 10px;
 }
 
+.error-text {
+  color: red;
+}
+
+.login-textarea {
+  width: 100%;
+}
+
+.sv-green {
+  color: #668960;
+}
+
 .upload-page {
   margin-top: 20px;
 }

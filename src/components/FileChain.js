@@ -1,17 +1,18 @@
 import React from "react";
 import createReactClass from "create-react-class";
-import {Button, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import FlipMove from "react-flip-move";
 import Columns from "react-columns";
 import FileDetails from "./FileDetails";
-import {capLength} from "../util";
+import { capLength } from "../util";
 
-import {putEdit} from "../helpers/api";
+import { putEdit } from "../helpers/api";
 
 const FileChain = createReactClass({
   componentWillMount() {
     this.setState({
       showModal: false,
+      errorText: "",
       currentMetadata: null,
     });
   },
@@ -29,7 +30,7 @@ const FileChain = createReactClass({
 
   seeVersionHistory(metadata) {
     console.log("version history", metadata);
-    window.open("/files/" + metadata.name)
+    window.open("/files/" + metadata.name);
   },
 
   handleClose() {
@@ -38,7 +39,7 @@ const FileChain = createReactClass({
 
   render() {
     const self = this;
-    const metadata = self.state.currentMetadata;
+    const { metadata, errorText } = this.state;
     const blockFiles = self.props.blockFiles;
 
     return (
@@ -68,6 +69,7 @@ const FileChain = createReactClass({
                 );
               })}
           </Columns>
+          {errorText && <p className="error-text">{errorText}</p>}
         </ListGroup>
 
         {/* Selected File metadata info modal */}
@@ -97,7 +99,10 @@ const FileChain = createReactClass({
             <Button bsStyle="success" onClick={() => this.edit(metadata)}>
               Upload new version
             </Button>
-            <Button bsStyle="info" onClick={() => this.seeVersionHistory(metadata)}>
+            <Button
+              bsStyle="info"
+              onClick={() => this.seeVersionHistory(metadata)}
+            >
               See version history
             </Button>
             <Button bsStyle="danger" onClick={this.handleClose}>

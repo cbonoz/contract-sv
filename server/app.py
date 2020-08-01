@@ -1,7 +1,7 @@
 from chalice import Chalice, CORSConfig
 import io
 import hashlib
-from chalice import BadRequestError
+from chalice import BadRequestError, Response
 from document_repository import DocumentRepository
 from bitsv import Key
 
@@ -29,28 +29,29 @@ def get_wallet_key_header():
 app = Chalice(app_name='contract-sv')
 
 
-repo = DocumentRepository()
-cors_config = CORSConfig(allow_origin='http://localhost:3000', allow_headers=['wallet_key'])
+doc_repo = DocumentRepository()
+cors_config = CORSConfig(
+    allow_origin='http://localhost:3000', allow_headers=['wallet_key'])
 
 
-@app.route('/', cors=cors_config)
+@ app.route('/', cors=cors_config)
 def index():
     return {'hello': 'world'}
 
 
-@app.route('/documents', cors=cors_config)
+@ app.route('/documents', cors=cors_config)
 def get_docs():
     wallet_key = get_wallet_key_header()
-    return repo.fetch_documents(wallet_key)
+    return doc_repo.fetch_documents(wallet_key)
 
 
-@app.route('/document/history/{document_name}', cors=cors_config)
+@ app.route('/document/history/{document_name}', cors=cors_config)
 def get_doc_history(document_name):
     wallet_key = get_wallet_key_header()
-    return repo.fetch_history(wallet_key, document_name)
+    return doc_repo.fetch_history(wallet_key, document_name)
 
 
-@app.route('/wallet/balance', cors=cors_config)
+@ app.route('/wallet/balance', cors=cors_config)
 def get_wallet_balance():
     wallet_key = get_wallet_key_header()
     print('key', wallet_key)
@@ -58,7 +59,7 @@ def get_wallet_balance():
 
 
 # https://github.com/aws/chalice/issues/79
-@app.route('/document/hash/{document_name}', cors=cors_config, methods=['POST'], content_types=['application/octet-stream'])
+@ app.route('/document/hash/{document_name}', cors=cors_config, methods=['POST'], content_types=['application/octet-stream'])
 def hash_doc(document_name):
     wallet_key = get_wallet_key_header()
     file_data = _get_request_bytes()
@@ -67,10 +68,7 @@ def hash_doc(document_name):
     m = hashlib.md5()
     m.update(data)
     file_hash = m.hexdigest()
-    repo.save(wallet_key, file_hash, document_name, file_size)
-    return {
-        'hash': file_hash
-    }
+    return doc_repo.save(wallet_key, file_hash, document_name, file_size)
 
 
 # The view function above will return {"hello": "world"}

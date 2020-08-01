@@ -1,4 +1,6 @@
 const library = (function () {
+  const R = require("ramda");
+
   const PORT = 8000;
   // TODO: replace with prod endpoint.
   const BASE_URL = `http://localhost:${PORT}`;
@@ -142,6 +144,9 @@ const library = (function () {
     });
   }
 
+  const getErrorMessage = (err) =>
+    R.pathOr(err.toString(), ["response", "data", "error"], err);
+
   return {
     putView,
     putEdit,
@@ -156,9 +161,10 @@ const library = (function () {
     postUploadFile,
     postGrantAccess,
     getBalance,
+    getErrorMessage,
     getFilesForSharedKey,
     getDocuments,
-    getHistory
+    getHistory,
   };
 })();
 module.exports = library;

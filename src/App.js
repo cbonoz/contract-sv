@@ -60,8 +60,7 @@ const App = () => {
                 className="header-bar-logo"
               />
             </Navbar.Brand>
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/upload">Upload</Nav.Link>
+            {hasAuth && <Nav.Link href="/upload">Upload</Nav.Link>}
             {hasAuth && (
               <Navbar.Collapse>
                 <Nav.Link
@@ -69,7 +68,7 @@ const App = () => {
                   onClick={logout}
                   className="justify-content-end"
                 >
-                  Logout
+                  <span className="sv-green">Logout</span>
                 </Nav.Link>
               </Navbar.Collapse>
             )}

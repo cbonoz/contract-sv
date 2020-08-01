@@ -12,6 +12,7 @@ const MAX_BLOCKS = 15;
 
 const Upload = () => {
   const [blockFiles, setBlockFiles] = useState([]);
+  const [errorText, setErrorText] = useState("");
   const [files, setFiles] = useState([]);
   const [balance, setBalance] = useState({});
   const { hasAuth } = useAuth();
@@ -30,7 +31,8 @@ const Upload = () => {
         console.log("docs", data);
         setBlockFiles(data);
       } catch (e) {
-        console.error("error loading documents", e);
+        console.error("error getting documents", e);
+        setErrorText(api.getErrorMessage(e));
       }
     };
 
@@ -55,6 +57,7 @@ const Upload = () => {
         </Col>
         <Col xs={12} md={7}>
           <FileChain blockFiles={blockFiles} />
+          {errorText && <p className="error-text">{errorText}</p>}
         </Col>
       </Row>
     </div>
