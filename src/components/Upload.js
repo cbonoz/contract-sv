@@ -13,6 +13,7 @@ const MAX_BLOCKS = 15;
 const Upload = () => {
   const [blockFiles, setBlockFiles] = useState([]);
   const [errorText, setErrorText] = useState("");
+  const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
   const [balance, setBalance] = useState({});
   const { hasAuth } = useAuth();
@@ -25,6 +26,7 @@ const Upload = () => {
 
   useEffect(() => {
     const getDocs = async () => {
+      setLoading(true);
       try {
         const res = await api.getDocuments();
         const { data } = res;
@@ -34,6 +36,7 @@ const Upload = () => {
         console.error("error getting documents", e);
         setErrorText(api.getErrorMessage(e));
       }
+      setLoading(false);
     };
 
     getDocs();
@@ -56,7 +59,7 @@ const Upload = () => {
           <FileUploader addBlocks={(blocks) => addBlocks(blocks)} />
         </Col>
         <Col xs={12} md={7}>
-          <FileChain blockFiles={blockFiles} />
+          <FileChain loading={loading} blockFiles={blockFiles} />
           {errorText && <p className="error-text">{errorText}</p>}
         </Col>
       </Row>

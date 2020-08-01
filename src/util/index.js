@@ -17,10 +17,12 @@ export const capLength = (s, length) => {
   return s;
 };
 
+const walletUrl = "";
+
 export const HOW_IT_WORKS = [
   <div>
-    Create a BitcoinSV (test net or main net) wallet. Example{" "}
-    <a href="">here</a>.
+    Create a BitcoinSV (test net or main net) wallet. See example{" "}
+    <a href={walletUrl}>here</a>.
   </div>,
   <div>
     Import your wallet. After importing, you'll be able to upload documents and

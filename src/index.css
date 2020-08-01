@@ -34,6 +34,11 @@ body {
   margin-top: 20px;
 }
 
+.no-file-text {
+  margin: 20px;
+  padding: 20px;
+}
+
 /*Col 1*/
 .file-uploader {
   background: white;
@@ -218,6 +223,7 @@ body {
 }
 
 .centered {
+  text-align: center;
   margin: 0 auto;
   vertical-align: center;
 }

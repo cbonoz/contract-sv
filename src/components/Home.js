@@ -51,7 +51,7 @@ const Home = () => {
       </p>
       <p className="how-it-works">
         <a href="#" onClick={showModal}>
-          Welcome to ContractSV
+          About ContractSV
         </a>
       </p>
       <p>
@@ -69,6 +69,12 @@ const Home = () => {
           <Modal.Title>How it works</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <p>
+            ContractSV is a document platform allowing you to compare documents
+            against previously hashed versions that are stored and validated on
+            the BitcoinSV blockchain.
+          </p>
+          <p>To get started, follow the instructions below.</p>
           <ol>
             {HOW_IT_WORKS.map((step, i) => {
               return (

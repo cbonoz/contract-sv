@@ -7,6 +7,7 @@ import FileDetails from "./FileDetails";
 import { capLength } from "../util";
 
 import { putEdit } from "../helpers/api";
+import { isEmpty } from "ramda";
 
 const FileChain = createReactClass({
   componentWillMount() {
@@ -38,9 +39,12 @@ const FileChain = createReactClass({
   },
 
   render() {
-    const self = this;
     const { metadata, errorText } = this.state;
-    const blockFiles = self.props.blockFiles;
+    const { blockFiles, loading } = this.props;
+
+    // const hasBlockFiles = blockFiles && blockFiles.length > 0;
+    console.log("load", loading, blockFiles);
+    const files = blockFiles || [];
 
     return (
       <div className="file-chain">
@@ -48,32 +52,38 @@ const FileChain = createReactClass({
           <ListGroupItem bsStyle="success">
             Previously uploaded files
           </ListGroupItem>
+          {!loading && !files.length && (
+            <div>
+              <p className="left no-file-text">
+                No files uploaded. Upload your first file on the left.
+              </p>
+            </div>
+          )}
           <Columns columns={2}>
-            {blockFiles &&
-              blockFiles.map((file, i) => {
-                return (
-                  <FlipMove
-                    key={i}
-                    enterAnimation="accordionHorizontal"
-                    leaveAnimation="accordionHorizontal"
-                    duration={200}
-                    appearAnimation="accordionVertical"
+            {files.map((file, i) => {
+              return (
+                <FlipMove
+                  key={i}
+                  enterAnimation="accordionHorizontal"
+                  leaveAnimation="accordionHorizontal"
+                  duration={200}
+                  appearAnimation="accordionVertical"
+                >
+                  <div
+                    className="file-block"
+                    onClick={() => this.selectFile(file)}
                   >
-                    <div
-                      className="file-block"
-                      onClick={() => self.selectFile(file)}
-                    >
-                      <FileDetails file={file} />
-                    </div>
-                  </FlipMove>
-                );
-              })}
+                    <FileDetails file={file} />
+                  </div>
+                </FlipMove>
+              );
+            })}
           </Columns>
           {errorText && <p className="error-text">{errorText}</p>}
         </ListGroup>
 
         {/* Selected File metadata info modal */}
-        <Modal show={self.state.showModal} onHide={this.handleClose}>
+        <Modal show={this.state.showModal} onHide={this.handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Uploaded Contract</Modal.Title>
           </Modal.Header>
