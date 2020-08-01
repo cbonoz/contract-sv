@@ -19,8 +19,9 @@ const FileChain = createReactClass({
   },
 
   selectFile(metadata) {
+    const { setSelectedFile } = this.props;
     console.log("selectFile", JSON.stringify(metadata));
-    this.setState({ currentMetadata: metadata, showModal: true });
+    setSelectedFile(metadata);
   },
 
   edit(metadata) {

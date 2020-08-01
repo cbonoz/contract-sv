@@ -80,7 +80,6 @@ const App = () => {
             <Route exact path="/" component={Home} />
             {/*<Route path="/files" component={YourFiles} />*/}
             <Route path="/about" component={About} />
-            <Route path="/files/:fileId" exact component={FileInfo} />
             <Route path="/upload" component={Upload} />
           </div>
         </Router>

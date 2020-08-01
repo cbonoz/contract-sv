@@ -14,6 +14,7 @@ const Upload = () => {
   const [blockFiles, setBlockFiles] = useState([]);
   const [errorText, setErrorText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [files, setFiles] = useState([]);
   const [balance, setBalance] = useState({});
   const { hasAuth } = useAuth();
@@ -50,6 +51,15 @@ const Upload = () => {
     return null;
   }
 
+  if (!!selectedFile) {
+    return (
+      <div>
+        <Button onClick={() => setSelectedFile(null)}>Go back</Button>
+        <FileInfo selectedFile={selectedFile} />;
+      </div>
+    );
+  }
+
   return (
     <div className="upload-page">
       <h2>Manage files</h2>
@@ -59,7 +69,11 @@ const Upload = () => {
           <FileUploader addBlocks={(blocks) => addBlocks(blocks)} />
         </Col>
         <Col xs={12} md={7}>
-          <FileChain loading={loading} blockFiles={blockFiles} />
+          <FileChain
+            loading={loading}
+            blockFiles={blockFiles}
+            setSelectedFile={setSelectedFile}
+          />
           {errorText && <p className="error-text">{errorText}</p>}
         </Col>
       </Row>
