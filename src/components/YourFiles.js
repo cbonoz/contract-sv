@@ -1,9 +1,7 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
-import PropTypes from 'prop-types';
-import {Button, Form, FormGroup, Modal, FormControl} from "react-bootstrap";
+import {Button, FormControl, FormGroup, Modal} from "react-bootstrap";
 import api from "../helpers/api";
-import { capLength } from '../util'
 import FileDetails from "./FileDetails";
 
 const YourFiles = createReactClass({

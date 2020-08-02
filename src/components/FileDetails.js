@@ -1,5 +1,6 @@
 import React from 'react';
 import createReactClass from 'create-react-class';
+import dateUtil from "../helpers/DateUtil";
 
 const FileDetails = createReactClass({
     render() {
@@ -11,14 +12,11 @@ const FileDetails = createReactClass({
         index = fileKeys.indexOf("name");
         if (index !== -1) fileKeys.splice(index, 1);
 
-        const lastModified = new Date(file['data']['last_modified'] * 1000)
-        const dateString = lastModified.toLocaleDateString() + " " + lastModified.toLocaleTimeString()
-
         return (
             <div>
                 <h4><b>{file['name']}</b></h4>
                 <div className="file-detail"><b>Versions:</b> {file['data']['versions']}</div>
-                <div className="file-detail"><b>Last modified:</b> {dateString}</div>
+                <div className="file-detail"><b>Last modified:</b> {dateUtil.formatEpochSeconds(file['data']['last_modified'])}</div>
             </div>
         );
     }

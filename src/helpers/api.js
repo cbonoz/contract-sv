@@ -6,7 +6,7 @@ const library = (function () {
   const BASE_URL = `http://localhost:${PORT}`;
 
   const axios = require("axios");
-  var faker = require("faker");
+  const faker = require("faker");
   const sha256 = require("js-sha256").sha256;
   const TEST_DEMO_ADDRESS = "AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y";
 
@@ -129,8 +129,7 @@ const library = (function () {
   function putEdit(name, address) {
     const url = `${BASE_URL}/view/${address}/${name}`;
     return axios.put(url, {}).then((response) => {
-      const data = response.data;
-      return data;
+      return response.data;
     });
   }
 
