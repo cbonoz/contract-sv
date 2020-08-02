@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import FileChain from "./FileChain";
 import FileUploader from "./FileUploader";
+import FileInfo from "./FileInfo";
 import { Jumbotron, Button, Row, Col } from "react-bootstrap";
 
 import api from "../helpers/api";
@@ -55,7 +56,7 @@ const Upload = () => {
     return (
       <div>
         <Button onClick={() => setSelectedFile(null)}>Go back</Button>
-        <FileInfo selectedFile={selectedFile} />;
+        <FileInfo selectedFile={selectedFile} />
       </div>
     );
   }

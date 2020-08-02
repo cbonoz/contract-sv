@@ -75,8 +75,7 @@ const library = (function () {
         ownerSharingKey: ownerSharingKey,
       })
       .then((response) => {
-        const data = response.data;
-        return data;
+        return response.data;
       });
   }
 
@@ -135,8 +134,8 @@ const library = (function () {
     });
   }
 
-  function uploadFile(binaryStr, fileName) {
-    const url = `${BASE_URL}/document/hash/${fileName}`;
+  function uploadFile(binaryStr, fileName, save) {
+    const url = `${BASE_URL}/document/hash/${fileName}?save=${save}`;
     return axios.post(url, binaryStr, {
       headers: {
         "Content-Type": "application/octet-stream",

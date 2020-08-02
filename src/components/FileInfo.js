@@ -7,20 +7,21 @@ import Loader from "react-loader-spinner"
 const FileInfo = createReactClass({
 
     componentWillMount() {
-        const fileId = this.props.match.params.fileId
+        const filename = this.props.selectedFile.name;
 
         this.setState({
             loading: true,
             versions: null,
+            currentHash: "1e50210a0202497fb79bc38b6ade6c34", // TODO allow user to upload + hash doc (without saving) from this page
         });
 
         const getDocs = async () => {
             try {
-                const res = await api.getHistory(fileId);
+                const res = await api.getHistory(filename);
                 const { data } = res;
                 this.setState({
                     loading: false,
-                    versions: data
+                    versions: data,
                 })
                 console.log("versions", data);
             } catch (e) {
@@ -32,17 +33,11 @@ const FileInfo = createReactClass({
     },
 
     render() {
-        let fileId = this.props.match.params.fileId
-        let component
-        if (this.state.loading) {
-            component = <Loader type="ThreeDots" color="#007bff" height="50" width="50" />
-        } else {
-            component = <History versions={this.state.versions}/>
-        }
         return (
             <div>
-                <h3>Version history for <b>{fileId}</b></h3>
-                {component}
+                <h3>Version history for <b>{this.props.selectedFile.name}</b></h3>
+                {this.state.loading && <Loader type="ThreeDots" color="#007bff" height="50" width="50" />}
+                {!this.state.loading && <History versions={this.state.versions} currentHash={this.state.currentHash} />}
             </div>
         )
     }

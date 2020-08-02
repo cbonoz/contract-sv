@@ -11,11 +11,14 @@ const FileDetails = createReactClass({
         index = fileKeys.indexOf("name");
         if (index !== -1) fileKeys.splice(index, 1);
 
+        const lastModified = new Date(file['data']['last_modified'] * 1000)
+        const dateString = lastModified.toLocaleDateString() + " " + lastModified.toLocaleTimeString()
+
         return (
             <div>
                 <h4><b>{file['name']}</b></h4>
                 <div className="file-detail"><b>Versions:</b> {file['data']['versions']}</div>
-                <div className="file-detail"><b>Last modified:</b> {new Date(file['data']['last_modified'] * 1000).toLocaleDateString()}</div>
+                <div className="file-detail"><b>Last modified:</b> {dateString}</div>
             </div>
         );
     }

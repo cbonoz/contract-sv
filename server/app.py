@@ -1,14 +1,13 @@
 from chalice import Chalice, CORSConfig
 import io
 import hashlib
-from chalice import BadRequestError, Response
+from chalice import BadRequestError
 from document_repository import DocumentRepository
 from bitsv import Key
 
 
 def _get_request_bytes():
-    rfile = io.BytesIO(app.current_request.raw_body)
-    return rfile
+    return io.BytesIO(app.current_request.raw_body)
 
 
 def check_keys_in_object(keys, obj):
@@ -59,7 +58,10 @@ def get_wallet_balance():
 
 
 # https://github.com/aws/chalice/issues/79
-@ app.route('/document/hash/{document_name}', cors=cors_config, methods=['POST'], content_types=['application/octet-stream'])
+@ app.route('/document/hash/{document_name}',
+            cors=cors_config,
+            methods=['POST'],
+            content_types=['application/octet-stream'])
 def hash_doc(document_name):
     wallet_key = get_wallet_key_header()
     file_data = _get_request_bytes()
@@ -68,7 +70,9 @@ def hash_doc(document_name):
     m = hashlib.md5()
     m.update(data)
     file_hash = m.hexdigest()
-    return doc_repo.save(wallet_key, file_hash, document_name, file_size)
+    if app.current_request.query_params.get('save', None) == 'true':
+        return doc_repo.save(wallet_key, file_hash, document_name, file_size)
+    return {'hash': file_hash}
 
 
 # The view function above will return {"hello": "world"}
