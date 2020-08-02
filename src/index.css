@@ -25,6 +25,9 @@ body {
 .login-textarea {
   width: 100%;
 }
+.content-area {
+  margin-top: 20px;
+}
 
 .sv-green {
   color: #668960;

@@ -142,6 +142,10 @@ const library = (function () {
     });
   }
 
+  function validate(txHash) {
+    return axios.get(`${BASE_URL}/validate/${txHash}`);
+  }
+
   const getErrorMessage = (err) =>
     R.pathOr(err.toString(), ["response", "data", "error"], err);
 
@@ -149,6 +153,7 @@ const library = (function () {
     putView,
     putEdit,
     uploadFile,
+    validate,
     BASE_URL,
     TEST_DEMO_ADDRESS,
     generateFileName,

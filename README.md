@@ -1,5 +1,5 @@
-Contract SV
----
+## Contract SV
+
 <!--
 
 break down historic industry data silos
@@ -10,7 +10,7 @@ improve interaction across governments and government agencies
 
 ### Problem
 * Documents get passed around via email all the time.
-* 
+* These documents can be long and it can be tedious or impossible to visually compare two 100 page.
 
 
 ### ContractSV
