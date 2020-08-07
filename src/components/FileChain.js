@@ -79,8 +79,8 @@ const FileChain = createReactClass({
                 </FlipMove>
               );
             })}
+            {errorText && <p className="error-text">{errorText}</p>}
           </Columns>
-          {errorText && <p className="error-text">{errorText}</p>}
         </ListGroup>
 
         {/* Selected File metadata info modal */}
@@ -108,7 +108,7 @@ const FileChain = createReactClass({
           </Modal.Body>
           <Modal.Footer>
             <Button bsStyle="success" onClick={() => this.edit(metadata)}>
-              Upload new version
+              Upload new document
             </Button>
             <Button
               bsStyle="info"

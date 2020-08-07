@@ -8,6 +8,7 @@ import { Jumbotron, Button, Row, Col } from "react-bootstrap";
 import api from "../helpers/api";
 import PropTypes from "prop-types";
 import { useAuth } from "../auth";
+import { toast } from "react-toastify";
 
 const MAX_BLOCKS = 15;
 
@@ -36,7 +37,12 @@ const Upload = () => {
         setBlockFiles(data);
       } catch (e) {
         console.error("error getting documents", e);
-        setErrorText(api.getErrorMessage(e));
+        const msg = `Could not fetch documents. ${api.getErrorMessage(e)}`;
+        toast.error(msg, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+        });
       }
       setLoading(false);
     };
@@ -63,7 +69,7 @@ const Upload = () => {
 
   return (
     <div className="upload-page">
-      <h2>Manage files</h2>
+      <div className="header-row">Your Documents</div>
 
       <Row className="show-grid">
         <Col xs={12} md={5}>
@@ -75,7 +81,6 @@ const Upload = () => {
             blockFiles={blockFiles}
             setSelectedFile={setSelectedFile}
           />
-          {errorText && <p className="error-text">{errorText}</p>}
         </Col>
       </Row>
     </div>

@@ -74,6 +74,18 @@ const App = () => {
           </Nav>
         </Navbar>
 
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+        />
+
         <Router>
           <div>
             <Route exact path="/" component={Home} />
