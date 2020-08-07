@@ -92,7 +92,7 @@ const App = () => {
             {/*<Route path="/files" component={YourFiles} />*/}
             <Route path="/about" component={About} />
             <Route path="/upload" component={Upload} />
-            <Route path="/cert/:transactionHash" component={Verification} />
+            <Route path="/validate/:transactionHash" component={Verification} />
           </div>
         </Router>
       </div>

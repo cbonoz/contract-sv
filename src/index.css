@@ -163,6 +163,11 @@ p {
   text-align: center;
 }
 
+.cert-image {
+  margin: 20px;
+  width: 100px;
+}
+
 .header-row {
   background: #eef9fd;
   padding-left: 20px;
