@@ -158,7 +158,8 @@ p {
   font-size: 16px;
 }
 
-.file-info-page {
+.file-info-page,
+.cert-page {
   text-align: center;
 }
 

@@ -8,7 +8,7 @@ export default function Verification({ match }) {
   const [fileData, setFileData] = useState({});
   const [errorText, setErrorText] = useState("");
 
-  const txHash = R.pathOr(null, ["params", "transactionId"], match);
+  const txHash = R.pathOr(null, ["params", "transactionHash"], match);
 
   useEffect(() => {
     async function validateTx() {
@@ -30,7 +30,7 @@ export default function Verification({ match }) {
   }, [txHash]);
 
   return (
-    <div className='content-area'>
+    <div className="content-area cert-page">
       <h1>Transaction Certificate</h1>
       {loading && (
         <Loader type="ThreeDots" color="#007bff" height="50" width="50" />
