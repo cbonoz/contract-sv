@@ -154,8 +154,16 @@ body {
   /* background: linear-gradient(276deg, rgba(174,195,238,1) 0%, rgba(68,59,129,0.2903536414565826) 22%); */
 }
 
+p {
+  font-size: 16px;
+}
+
+textarea {
+  padding: 10px;
+}
+
 .home-page {
-  background-image: url("assets/homes.png") !important;
+  /* background-image: url("assets/homes.png") !important; */
   background-repeat: repeat-x;
   background-size: 150px auto;
   /* background-attachment: fixed; */
@@ -168,6 +176,7 @@ body {
   /*background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);*/
   /* background-size: 225px auto; */
 }
+
 .navbar {
   margin-bottom: 0px !important;
   border-bottom: 1px solid #999;
