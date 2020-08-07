@@ -148,10 +148,20 @@ body {
 
 /*Custom CSS files below*/
 
+.loading-margin {
+  margin-top: 20px;
+}
+
 .App {
   min-height: 100vh;
   height: 100%;
   /* background: linear-gradient(276deg, rgba(174,195,238,1) 0%, rgba(68,59,129,0.2903536414565826) 22%); */
+}
+
+.timeline-area {
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 p {
