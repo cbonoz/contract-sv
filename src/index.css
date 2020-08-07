@@ -158,6 +158,10 @@ p {
   font-size: 16px;
 }
 
+.file-info-page {
+  text-align: center;
+}
+
 .header-row {
   background: #eef9fd;
   padding-left: 20px;
