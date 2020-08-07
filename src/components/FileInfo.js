@@ -4,6 +4,7 @@ import createReactClass from "create-react-class";
 import api from "../helpers/api";
 import Loader from "react-loader-spinner";
 import { Button } from "react-bootstrap";
+import FileUploader from "./FileUploader";
 
 const FileInfo = createReactClass({
   componentWillMount() {
@@ -13,7 +14,9 @@ const FileInfo = createReactClass({
       loading: true,
       versions: null,
       filterMatches: false,
-      currentHash: "1e50210a0202497fb79bc38b6ade6c34", // TODO allow user to upload + hash doc (without saving) from this page
+      showUploader: false,
+      compare: false,
+      currentHash: null,
     });
 
     const getDocs = async () => {
@@ -33,38 +36,46 @@ const FileInfo = createReactClass({
     getDocs();
   },
 
-  handleCheckEvent(event) {
+  handleCompareClicked(event) {
     this.setState({
-      filterMatches: event.target.checked,
+      showUploader: !this.state.showUploader,
+      compare: true,
     });
   },
 
+  handleUploadClicked(event) {
+    this.setState({
+      showUploader: !this.state.showUploader,
+      compare: false
+    });
+  },
+
+  handleFileUploaded(results) {
+    if (results.length > 0) {
+      this.setState({
+        currentHash: results[0].hash
+      })
+    }
+  },
+
   render() {
-    const { versions, currentHash, filterMatches, loading } = this.state;
+    const { versions, currentHash, filterMatches, loading, showUploader, compare } = this.state;
     return (
       <div className="file-info-page">
         <hr />
         <h3>
           Version history for <b>{this.props.selectedFile.name}</b>
         </h3>
-        {this.state.currentHash && (
-          <h5>
-            Matching hash <b>{currentHash}</b>
-          </h5>
-        )}
-        <input
-          type="checkbox"
-          checked={filterMatches}
-          onChange={this.handleCheckEvent}
-        />{" "}
-        Show matches only
         {loading && (
           <Loader type="ThreeDots" color="#007bff" height="50" width="50" />
         )}
         {!loading && (
           <div>
             <Button>Upload new version</Button>
-            <Button>Compare existing document</Button>
+            <Button onClick={this.handleCompareClicked}>Compare existing document</Button>
+            {showUploader && (
+                <FileUploader successCallback={this.handleFileUploaded} compare={compare} />
+            )}
             <History
               versions={versions}
               currentHash={currentHash}

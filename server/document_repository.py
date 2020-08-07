@@ -69,11 +69,11 @@ class DocumentRepository:
         return self._extract_metadata([tx_hash])
 
     @wrap_http
-    def find_most_recent_matching_version(self, wallet_key, doc_hash):
+    def find_matching_versions(self, wallet_key, doc_hash):
         p_key = Key(wallet_key, network=self.network)
         txs = p_key.get_transactions()
         metadata_list = self._extract_metadata(txs)
-        return sorted(filter(lambda m: m['hash'] == doc_hash, metadata_list), key=lambda m: m['timestamp'], reverse=True)[0]
+        return sorted(filter(lambda m: m['hash'] == doc_hash, metadata_list), key=lambda m: m['timestamp'], reverse=True)
 
     @wrap_http
     def fetch_history(self, wallet_key, doc_name):

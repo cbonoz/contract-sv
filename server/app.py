@@ -74,7 +74,7 @@ def hash_doc(document_name):
     m.update(data)
     file_hash = m.hexdigest()
     if app.current_request.query_params.get('compare', None) == 'true':
-        return doc_repo.find_most_recent_matching_version(wallet_key, file_hash)
+        return doc_repo.find_matching_versions(wallet_key, file_hash)
     return doc_repo.save(wallet_key, file_hash, document_name, file_size)
 
 

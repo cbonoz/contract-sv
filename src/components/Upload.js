@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 
 import FileChain from "./FileChain";
 import FileUploader from "./FileUploader";
 import FileInfo from "./FileInfo";
-import { Jumbotron, Button, Row, Col } from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 
 import api from "../helpers/api";
-import PropTypes from "prop-types";
-import { useAuth } from "../auth";
-import { toast } from "react-toastify";
+import {useAuth} from "../auth";
+import {toast} from "react-toastify";
 
 const MAX_BLOCKS = 15;
 
@@ -73,7 +72,7 @@ const Upload = () => {
 
       <Row className="show-grid">
         <Col xs={12} md={5}>
-          <FileUploader addBlocks={(blocks) => addBlocks(blocks)} />
+          <FileUploader addBlocks={(blocks) => addBlocks(blocks)} compare={false} />
         </Col>
         <Col xs={12} md={7}>
           <FileChain
