@@ -47,7 +47,7 @@ const FileUploader = () => {
       const fileName = file.name;
 
       api
-        .uploadFile(fileContent, fileName, true)
+        .uploadFile(fileContent, fileName, false)
         .then((res) => {
           console.log("got result", res);
           showToast(`File ${fileName} uploaded!`);

@@ -1,7 +1,6 @@
-from chalice import Chalice, CORSConfig
+from chalice import Chalice, CORSConfig, BadRequestError
 import io
 import hashlib
-from chalice import BadRequestError
 from document_repository import DocumentRepository
 from bitsv import Key
 
@@ -53,8 +52,12 @@ def get_doc_history(document_name):
 @ app.route('/wallet/balance', cors=cors_config)
 def get_wallet_balance():
     wallet_key = get_wallet_key_header()
-    print('key', wallet_key)
     return Key(wallet_key, network='test').get_balance()
+
+
+@ app.route('/validate/{transaction_hash}', cors=cors_config)
+def validate(transaction_hash):
+    return doc_repo.fetch_metadata(transaction_hash)
 
 
 # https://github.com/aws/chalice/issues/79
@@ -70,9 +73,9 @@ def hash_doc(document_name):
     m = hashlib.md5()
     m.update(data)
     file_hash = m.hexdigest()
-    if app.current_request.query_params.get('save', None) == 'true':
-        return doc_repo.save(wallet_key, file_hash, document_name, file_size)
-    return {'hash': file_hash}
+    if app.current_request.query_params.get('compare', None) == 'true':
+        return doc_repo.find_most_recent_matching_version(wallet_key, file_hash)
+    return doc_repo.save(wallet_key, file_hash, document_name, file_size)
 
 
 # The view function above will return {"hello": "world"}

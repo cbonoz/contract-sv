@@ -36,7 +36,7 @@ class DocumentRepository:
                         if 'time' in tx:
                             time = tx['time']
                         result = {'name': doc_name, 'hash': doc_hash,
-                                  'timestamp': time, 'size': doc_size}
+                                  'timestamp': time, 'size': doc_size, 'tx_hash': tx_id}
                         results.append(result)
         return results
 
@@ -63,6 +63,17 @@ class DocumentRepository:
         for entry in docs_data.items():
             results.append({'name': entry[0], 'data': entry[1]})
         return results
+
+    @wrap_http
+    def fetch_metadata(self, tx_hash):
+        return self._extract_metadata([tx_hash])
+
+    @wrap_http
+    def find_most_recent_matching_version(self, wallet_key, doc_hash):
+        p_key = Key(wallet_key, network=self.network)
+        txs = p_key.get_transactions()
+        metadata_list = self._extract_metadata(txs)
+        return sorted(filter(lambda m: m['hash'] == doc_hash, metadata_list), key=lambda m: m['timestamp'], reverse=True)[0]
 
     @wrap_http
     def fetch_history(self, wallet_key, doc_name):

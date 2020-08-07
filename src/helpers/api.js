@@ -133,8 +133,8 @@ const library = (function () {
     });
   }
 
-  function uploadFile(binaryStr, fileName, save) {
-    const url = `${BASE_URL}/document/hash/${fileName}?save=${save}`;
+  function uploadFile(binaryStr, fileName, compare) {
+    const url = `${BASE_URL}/document/hash/${fileName}?compare=${compare}`;
     return axios.post(url, binaryStr, {
       headers: {
         "Content-Type": "application/octet-stream",
