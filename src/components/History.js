@@ -17,6 +17,7 @@ const History = createReactClass({
                 const versionNum = versions.length - i
                 return (
                     <TimelineEvent key={i} title={"Version " + versionNum}
+                                   subtitle={"Size: " + (version.size / 1000) + "kb"}
                                    createdAt={timestampStr}
                                    icon={matchesHash && <img alt="Verified match" src={verified} height={22} width={22} />}
                                    titleStyle={{ fontWeight: 'bold' }}
