@@ -172,6 +172,7 @@ textarea {
 }
 
 .home-page {
+  text-align: center;
   /* background-image: url("assets/homes.png") !important; */
   background-repeat: repeat-x;
   background-size: 150px auto;
