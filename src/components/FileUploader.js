@@ -46,7 +46,11 @@ const FileUploader = createReactClass({
         .uploadFile(fileContent, fileName, compare)
         .then((res) => {
           console.log("got result", res);
-          this.showToast(`File ${fileName} uploaded!`);
+          let msg = `File ${fileName} uploaded!`;
+          if (!compare) {
+            msg = `${msg} It may take a few minutes for the upload to appear on the timeline`;
+          }
+          this.showToast(msg);
           load("done");
           if (this.props.successCallback) {
             this.props.successCallback(res.data);

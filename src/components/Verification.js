@@ -54,7 +54,8 @@ export default function Verification({ match }) {
           <img src={checkImage} className="cert-image" />
           <p>---</p>
           <p>
-            This transaction hash corresponds to the hash of document&nbsp;<b>{name}</b>.
+            This transaction hash corresponds to the hash of document&nbsp;
+            <b>{name}</b>.
           </p>
           <p>
             This document was logged on {formatDate(new Date(timestamp * 1000))}
@@ -66,6 +67,7 @@ export default function Verification({ match }) {
           <a href={txUrl} target="_blank">
             View on BSV Explorer
           </a>
+          <p>Share this link in emails!</p>
         </div>
       )}
       {!validDocument && (
