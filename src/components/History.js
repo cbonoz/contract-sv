@@ -3,12 +3,29 @@ import createReactClass from 'create-react-class';
 import {Timeline, TimelineEvent} from 'react-event-timeline'
 import verified from '../assets/verified.png'
 import dateUtil from "../helpers/DateUtil";
+import api from '../helpers/api'
+import { Button, Toast } from "react-bootstrap";
 
 const History = createReactClass({
     componentWillMount() {
         this.setState({
-            filterMatches: false
+            filterMatches: false,
+            copyResult: null,
         })
+    },
+
+    async copyLink(txHash) {
+        const linkText = api.BASE_URL + "/validate/" + txHash;
+        try {
+            await navigator.clipboard.writeText(linkText);
+            this.setState({
+                copyResult: "Copied!"
+            })
+        } catch (err) {
+            this.setState({
+                copyResult: "Error copying link. Please try again."
+            })
+        }
     },
 
     render() {
@@ -22,6 +39,13 @@ const History = createReactClass({
 
         return (
             <div className="timeline-area">
+                <Toast
+                    onClose={() => this.setState({copyResult: null})}
+                    show={this.state.copyResult}
+                    delay={500}
+                    autohide>
+                    <Toast.Body>{this.state.copyResult}</Toast.Body>
+                </Toast>
                 {matching && (
                     <div>
                         Matched versions: <b>{numMatches}</b>
@@ -48,7 +72,17 @@ const History = createReactClass({
                                                 <img alt="Verified match" src={verified} height={22} width={22} />}
                                            titleStyle={{ fontWeight: 'bold' }}
                             >
-                                {matchesHash && <b>Verified match!</b>}
+                                {matchesHash &&
+                                    <div>
+                                        <b>Verified match!</b>
+                                        <br/>
+                                        <br/>
+                                        <Button
+                                            variant="success"
+                                            size="sm"
+                                            onClick={() => this.copyLink(version.tx_hash)}>Copy verification link</Button>
+                                    </div>
+                                }
                             </TimelineEvent>
                         );
                     })
