@@ -1,13 +1,11 @@
 import React from "react";
 import createReactClass from "create-react-class";
-import { Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
+import {Button, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import FlipMove from "react-flip-move";
 import Columns from "react-columns";
 import FileDetails from "./FileDetails";
-import { capLength } from "../util";
-
-import { putEdit } from "../helpers/api";
-import { isEmpty } from "ramda";
+import {capLength} from "../util";
+import {putEdit} from "../helpers/api";
 
 const FileChain = createReactClass({
   componentWillMount() {
@@ -61,23 +59,25 @@ const FileChain = createReactClass({
             </div>
           )}
           <Columns columns={2}>
-            {files.map((file, i) => {
-              return (
-                <FlipMove
-                  key={i}
-                  enterAnimation="accordionHorizontal"
-                  leaveAnimation="accordionHorizontal"
-                  duration={200}
-                  appearAnimation="accordionVertical"
-                >
-                  <div
-                    className="file-block"
-                    onClick={() => this.selectFile(file)}
+            {files
+              .sort((f1, f2) => f1.data.last_modified > f2.data.last_modified ? -1 : 1)
+              .map((file, i) => {
+                return (
+                  <FlipMove
+                    key={i}
+                    enterAnimation="accordionHorizontal"
+                    leaveAnimation="accordionHorizontal"
+                    duration={200}
+                    appearAnimation="accordionVertical"
                   >
-                    <FileDetails file={file} />
-                  </div>
-                </FlipMove>
-              );
+                    <div
+                      className="file-block"
+                      onClick={() => this.selectFile(file)}
+                    >
+                      <FileDetails file={file} />
+                    </div>
+                  </FlipMove>
+                );
             })}
             {errorText && <p className="error-text">{errorText}</p>}
           </Columns>
