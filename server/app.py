@@ -29,7 +29,7 @@ app = Chalice(app_name='contract-sv')
 
 doc_repo = DocumentRepository()
 cors_config = CORSConfig(
-    allow_origin='http://localhost:3000', allow_headers=['wallet_key'])
+    allow_origin='http://localhost:3000,contractsv.netlify.app', allow_headers=['wallet_key'])
 
 
 @ app.route('/', cors=cors_config)

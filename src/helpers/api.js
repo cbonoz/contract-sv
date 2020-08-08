@@ -3,7 +3,10 @@ const library = (function () {
 
   const PORT = 8000;
   // TODO: replace with prod endpoint.
-  const BASE_URL = `http://localhost:${PORT}`;
+  const BASE_URL =
+    window.location.origin === `http://localhost:3000`
+      ? `http://localhost:${PORT}`
+      : `https://wqk0plnnk9.execute-api.us-east-1.amazonaws.com/api/`;
 
   const axios = require("axios");
   const faker = require("faker");
