@@ -5,22 +5,36 @@ import verified from '../assets/verified.png'
 import dateUtil from "../helpers/DateUtil";
 
 const History = createReactClass({
+    componentWillMount() {
+        this.setState({
+            filterMatches: false
+        })
+    },
+
     render() {
         const {
             versions,
             matching,
             currentHash
         } = this.props;
+
         const numMatches = versions.filter((version) => version.hash === currentHash).length
 
         return (
             <div className="timeline-area">
                 {matching && (
-                    <div>Matched uploads: <b>{numMatches}</b></div>
+                    <div>
+                        Matched versions: <b>{numMatches}</b>
+                        <br/>
+                        <input type="checkbox"
+                               checked={this.state.filterMatches}
+                               onChange={() => this.setState({filterMatches: !this.state.filterMatches})}
+                        /> Hide documents that don't match
+                    </div>
                 )}
                 <Timeline>
                     {versions && versions
-                    // .filter((version) => !this.props.filterMatches || this.props.currentHash === version.hash)
+                    .filter((version) => !this.state.filterMatches || currentHash === version.hash)
                     .map((version, i) => {
                         const timestampStr = dateUtil.formatEpochSeconds(version.timestamp)
                         const matchesHash = currentHash === version.hash
