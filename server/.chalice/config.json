@@ -6,7 +6,9 @@
       "api_gateway_stage": "api"
     },
     "prod": {
-      "ORIGIN_URL": "https://contractsv.netlify.app"
+      "environment_variables": {
+        "ORIGIN_URL": "https://contractsv.netlify.app/"
+      }
     }
   }
 }
