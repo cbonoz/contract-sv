@@ -30,6 +30,7 @@ const FileInfo = createReactClass({
       filterMatches: false,
       showModal: false,
       compare: false,
+      matching: false,
       currentHash: null,
     });
 
@@ -51,15 +52,17 @@ const FileInfo = createReactClass({
   },
 
   handleFileUploaded(results) {
-    if (this.state.compare && results.length > 0) {
+    if (this.state.compare) {
       this.setState({
         showModal: false,
         compare: false,
-        currentHash: results[0].hash,
+        matching: true,
+        currentHash: results.length > 0 ? results[0].hash : null,
       });
-    } else if (!this.state.compare) {
+    } else {
       this.setState({
         showModal: false,
+        matching: null,
         currentHash: null,
       });
       this.getDocs();
@@ -74,12 +77,12 @@ const FileInfo = createReactClass({
 
   render() {
     const {
-      versions,
-      currentHash,
-      filterMatches,
-      loading,
-      showModal,
-      compare,
+        versions,
+        currentHash,
+        loading,
+        showModal,
+        compare,
+        matching
     } = this.state;
     return (
       <div className="file-info-page">
@@ -116,13 +119,11 @@ const FileInfo = createReactClass({
                 </Button>
               </Modal.Footer>
             </Modal>
-            <div className="timeline-area">
-              <History
-                versions={versions}
-                currentHash={currentHash}
-                filterMatches={filterMatches}
-              />
-            </div>
+            <History
+              versions={versions}
+              currentHash={currentHash}
+              matching={matching}
+            />
           </div>
         )}
       </div>
