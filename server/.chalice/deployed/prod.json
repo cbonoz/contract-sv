@@ -3,19 +3,19 @@
     {
       "name": "default-role",
       "resource_type": "iam_role",
-      "role_arn": "arn:aws:iam::181660304934:role/server-prod",
+      "role_arn": "arn:aws:iam::372207227647:role/server-prod",
       "role_name": "server-prod"
     },
     {
       "name": "api_handler",
       "resource_type": "lambda_function",
-      "lambda_arn": "arn:aws:lambda:us-east-1:181660304934:function:server-prod"
+      "lambda_arn": "arn:aws:lambda:us-east-1:372207227647:function:server-prod"
     },
     {
       "name": "rest_api",
       "resource_type": "rest_api",
-      "rest_api_id": "nx73p5nztb",
-      "rest_api_url": "https://nx73p5nztb.execute-api.us-east-1.amazonaws.com/api/"
+      "rest_api_id": "949bpdfqde",
+      "rest_api_url": "https://949bpdfqde.execute-api.us-east-1.amazonaws.com/api/"
     }
   ],
   "schema_version": "2.0",

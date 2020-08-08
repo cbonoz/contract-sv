@@ -7,7 +7,7 @@
     },
     "prod": {
       "environment_variables": {
-        "ORIGIN_URL": "https://contractsv.netlify.app/"
+        "ORIGIN_URL": "https://contractsv.netlify.app"
       }
     }
   }

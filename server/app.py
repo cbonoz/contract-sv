@@ -37,7 +37,7 @@ cors_config = CORSConfig(
 
 @ app.route('/', cors=cors_config)
 def index():
-    return {'hello': 'world'}
+    return {'hello': 'world', 'origin': ORIGIN_URL}
 
 
 @ app.route('/documents', cors=cors_config)
