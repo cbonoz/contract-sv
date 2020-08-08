@@ -1,5 +1,6 @@
 from chalice import Chalice, CORSConfig, BadRequestError
 import io
+import os
 import hashlib
 from document_repository import DocumentRepository
 from bitsv import Key
@@ -26,10 +27,12 @@ def get_wallet_key_header():
 
 app = Chalice(app_name='contract-sv')
 
+ORIGIN_URL = os.environ.get('ORIGIN_URL', 'http://localhost:3000')
+print('origin', ORIGIN_URL)
 
 doc_repo = DocumentRepository()
 cors_config = CORSConfig(
-    allow_origin='http://localhost:3000,contractsv.netlify.app', allow_headers=['wallet_key'])
+    allow_origin=ORIGIN_URL, allow_headers=['wallet_key'])
 
 
 @ app.route('/', cors=cors_config)

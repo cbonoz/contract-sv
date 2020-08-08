@@ -6,7 +6,7 @@ const library = (function () {
   const BASE_URL =
     window.location.origin === `http://localhost:3000`
       ? `http://localhost:${PORT}`
-      : `https://wqk0plnnk9.execute-api.us-east-1.amazonaws.com/api/`;
+      : `https://nx73p5nztb.execute-api.us-east-1.amazonaws.com/api/`;
 
   const axios = require("axios");
   const faker = require("faker");
