@@ -19,6 +19,7 @@ const FileUploader = createReactClass({
 
   // handle file upload. https://pqina.nl/filepond/docs/patterns/api/server/
   handleProcessing(fieldName, file, metadata, load, error, progress, abort) {
+    const { enforceName, compare } = this.props;
     this.setState({ errorText: "" });
     // console.log(JSON.stringify(load))
     const reader = new FileReader();
@@ -31,8 +32,18 @@ const FileUploader = createReactClass({
 
       const fileName = file.name;
 
+      if (enforceName && fileName !== enforceName) {
+        const errorText = `File must be named ${enforceName} for ${
+          compare ? `comparison` : `a new upload`
+        }.`;
+
+        error(errorText);
+        this.setState({ errorText });
+        return;
+      }
+
       api
-        .uploadFile(fileContent, fileName, this.props.compare)
+        .uploadFile(fileContent, fileName, compare)
         .then((res) => {
           console.log("got result", res);
           this.showToast(`File ${fileName} uploaded!`);

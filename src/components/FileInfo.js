@@ -77,19 +77,21 @@ const FileInfo = createReactClass({
 
   render() {
     const {
-        versions,
-        currentHash,
-        loading,
-        showModal,
-        compare,
-        matching
+      versions,
+      currentHash,
+      loading,
+      showModal,
+      compare,
+      matching,
     } = this.state;
+    const { selectedFile } = this.props;
     return (
       <div className="file-info-page">
         <hr />
         <h3>
-          Version history for <b>{this.props.selectedFile.name}</b>
+          Version history for <b>{selectedFile.name}</b>
         </h3>
+        <p>To upload or compare a new document it must have the same name.</p>
         <hr />
         {loading && (
           <Loader type="ThreeDots" color="#007bff" height="50" width="50" />
@@ -108,6 +110,7 @@ const FileInfo = createReactClass({
                 <FileUploader
                   successCallback={this.handleFileUploaded}
                   compare={compare}
+                  enforceName={selectedFile.name}
                 />
               </Modal.Body>
               <Modal.Footer>

@@ -54,8 +54,7 @@ export default function Verification({ match }) {
           <img src={checkImage} className="cert-image" />
           <p>---</p>
           <p>
-            This transaction hash corresponds to the hash of document{" "}
-            <b>{name}</b>.
+            This transaction hash corresponds to the hash of document&nbsp;<b>{name}</b>.
           </p>
           <p>
             This document was logged on {formatDate(new Date(timestamp * 1000))}
