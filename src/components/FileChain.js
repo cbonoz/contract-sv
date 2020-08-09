@@ -1,11 +1,11 @@
 import React from "react";
 import createReactClass from "create-react-class";
-import {Button, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
+import { Button, ListGroup, ListGroupItem, Modal } from "react-bootstrap";
 import FlipMove from "react-flip-move";
 import Columns from "react-columns";
 import FileDetails from "./FileDetails";
-import {capLength} from "../util";
-import {putEdit} from "../helpers/api";
+import { capLength } from "../util";
+import { putEdit } from "../helpers/api";
 
 const FileChain = createReactClass({
   componentWillMount() {
@@ -60,7 +60,9 @@ const FileChain = createReactClass({
           )}
           <Columns columns={2}>
             {files
-              .sort((f1, f2) => f1.data.last_modified > f2.data.last_modified ? -1 : 1)
+              .sort((f1, f2) =>
+                f1.data.last_modified > f2.data.last_modified ? -1 : 1
+              )
               .map((file, i) => {
                 return (
                   <FlipMove
@@ -78,7 +80,7 @@ const FileChain = createReactClass({
                     </div>
                   </FlipMove>
                 );
-            })}
+              })}
             {errorText && <p className="error-text">{errorText}</p>}
           </Columns>
         </ListGroup>

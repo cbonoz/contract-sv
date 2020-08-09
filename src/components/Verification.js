@@ -79,7 +79,7 @@ export default function Verification({ match }) {
             The transaction hash provided does not correspond to a valid
             ContractSV document.
           </p>
-          <p className="error-text">{errorText}</p>
+          {/* <p className="error-text">{errorText}</p> */}
         </div>
       )}
     </div>

@@ -106,7 +106,8 @@ const History = createReactClass({
                         >
                           Copy verification link
                         </Button>
-                        {link && (
+                        <br />
+                        {false && link && (
                           <p>
                             <a href={link} target="_blank">
                               {link}
