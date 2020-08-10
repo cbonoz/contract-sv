@@ -1,6 +1,6 @@
 from bitsv import Key
 from whatsonchain import api
-from http_util import wrap_http
+from chalicelib.http_util import wrap_http
 
 
 class InsufficientBalanceError(Exception):

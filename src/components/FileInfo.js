@@ -89,7 +89,7 @@ const FileInfo = createReactClass({
       <div className="file-info-page">
         <hr />
         <h3>
-          Version history for <b>{selectedFile.name}</b>
+          Upload history for <b>{selectedFile.name}</b>
         </h3>
         <p>To upload or compare a new document it must have the same name.</p>
         <hr />

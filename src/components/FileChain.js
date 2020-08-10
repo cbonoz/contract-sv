@@ -81,8 +81,8 @@ const FileChain = createReactClass({
                   </FlipMove>
                 );
               })}
-            {errorText && <p className="error-text">{errorText}</p>}
           </Columns>
+          {errorText && <p className="error-text">{errorText}</p>}
         </ListGroup>
 
         {/* Selected File metadata info modal */}

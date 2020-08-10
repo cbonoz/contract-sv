@@ -47,7 +47,10 @@ const Home = () => {
       </p>
       <p className="header-text-h3">
         <br />
-        {/* <b>No</b> Username or Password required. */}
+        <b>
+          Use ContractSV for free using your BitcoinSV testnet wallet
+          credential.
+        </b>
       </p>
       <p className="how-it-works">
         <a href="#" onClick={showModal}>
@@ -57,6 +60,7 @@ const Home = () => {
       <p>
         <Button
           bsStyle="success btn-large"
+          // variant="success"
           className="create-button"
           onClick={() => setShowLoginModal(true)}
         >
@@ -98,8 +102,9 @@ const Home = () => {
         </Modal.Header>
         <Modal.Body>
           <p>
-            ContractSV uses your wallet to authorize and track documents. Please
-            enter it below to begin:
+            ContractSV uses your testnet wallet to authorize and track
+            documents. We'll associate any uploaded document hashes on the
+            blockchain with this key. Please enter it below to begin:
           </p>
           <div class="field">
             <label class="label">Enter wallet key:</label>
@@ -116,10 +121,12 @@ const Home = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button bsStyle="danger" onClick={() => setShowLoginModal(false)}>
+          <Button variant="neutral" onClick={() => setShowLoginModal(false)}>
             Cancel
           </Button>
-          <Button onClick={login}>Login</Button>
+          <Button variant="success" onClick={login}>
+            Login
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

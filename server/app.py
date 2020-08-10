@@ -2,7 +2,7 @@ from chalice import Chalice, CORSConfig, BadRequestError
 import io
 import os
 import hashlib
-from document_repository import DocumentRepository
+from chalicelib.document_repository import DocumentRepository
 from bitsv import Key
 
 
