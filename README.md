@@ -6,11 +6,11 @@
 
 Goals of the hackathon:
 
-* break down historic industry data silos
-* make it easier for companies in different industries to interact
-* make it easier to operate across geographic boundaries for businesses, organizations, and consumers
-* enable consumers to interact, in a single way, with different businesses and organizations concerning their data and transactions
-* improve interaction across governments and government agencies
+- break down historic industry data silos
+- make it easier for companies in different industries to interact
+- make it easier to operate across geographic boundaries for businesses, organizations, and consumers
+- enable consumers to interact, in a single way, with different businesses and organizations concerning their data and transactions
+- improve interaction across governments and government agencies
 
 This project focuses on leveraging BitcoinSV to improve trust between human parties around shared documents and contracts.
 
@@ -29,4 +29,6 @@ This project focuses on leveraging BitcoinSV to improve trust between human part
 
 ### Future use cases
 
+- Email integration
 - Notarization
+- Integrations with other document hosting platforms such as google docs for verification

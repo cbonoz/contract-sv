@@ -60,6 +60,7 @@ const FileChain = createReactClass({
           )}
           <Columns columns={2}>
             {files
+              .filter((x) => x.name.indexOf("doc") === -1) // local filter
               .sort((f1, f2) =>
                 f1.data.last_modified > f2.data.last_modified ? -1 : 1
               )
